@@ -1,15 +1,12 @@
 jquery.captcha.js
 ==========
 
-==========
-
 jQuery plugin for fake image CAPTCHA
 
 Download
 --------
 
-- [jquery.captcha.js](https://raw.github.com/steelydylan/jquery.captcha.js)
-- [jquery.captcha.min.js](https://raw.github.com/steelydylan/jquery.captcha.min.js)(compressed)
+- [jquery.captcha.js](https://raw.githubusercontent.com/steelydylan/jquery.captcha.js/master/jquery.captcha.js)
 
 Documentation
 -------------
