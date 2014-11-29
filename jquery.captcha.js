@@ -4,7 +4,7 @@
  * <http://horicdesign.com/>
  * Released under the MIT license.
  */
-$(function(){
+(function($){
     var canvas = document.createElement("canvas");
     var ctx = canvas.getContext('2d');    
     /*ランダムな文字列を取得*/
@@ -34,8 +34,8 @@ $(function(){
     }
     $.fn.extend({
         /*幅、高さ、文字の長さ*/
-        setCaptcha:function(json){
-            var opt = {
+        setCaptcha:function(opt){
+            var opt = $.extend({
                 width:300,/*画像の幅*/
                 height:100,/*画像の高さ*/
                 func:"twirl",/*文字の歪ませ方*/
@@ -45,36 +45,28 @@ $(function(){
                 color:"red",/*CAPTCHA画像の色*/
                 form:"#form",/*フォームのクラス名もしくはidを指定*/
                 hook:function(){alert("入力された文字とCAPTCHA画像が違います");}/*処理が通らなかった時のコールバック*/
-            };
-            if(!json){
-                json = opt;
-            }
-            for(var i in opt){
-                if(!json[i]){
-                    json[i] = opt[i];
-                }
-            }
-            var width = json.width;
-            var height = json.height;
-            var length = json.length;
-            var func = json.func;
+            },opt);
+            var width = opt.width;
+            var height = opt.height;
+            var length = opt.length;
+            var func = opt.func;
             var string = getRandText(length);
-            var size = json.size;
+            var size = opt.size;
             canvas.width = width;
             canvas.height = height;
-            ctx.font = size + "px " + json.font;
+            ctx.font = size + "px " + opt.font;
             var cX = parseInt(size) * string.length / 2;
             var cY = parseInt(size) / 2;
             var lineHeight = ctx.measureText('a').width * 1.5;
             ctx.translate(width/2-size/2+15,height/2);
-            ctx.fillStyle = json.color;
+            ctx.fillStyle = opt.color;
             ctx.fillText(string,0,lineHeight);
             var $that = $(this);
             /*認証部分、認証されなければ処理を止めてフック関数が動く*/
-            $(json.form).on("submit",function(e){
+            $(opt.form).on("submit",function(e){
                 if(string != $that.val()){
                     e.preventDefault();
-                    json.hook();
+                    opt.hook();
                 }
             })
             ctx.restore();
@@ -98,4 +90,4 @@ $(function(){
             $img.insertBefore($(this));
         }
     });
-});
+})(jQuery);
